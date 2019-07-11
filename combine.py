@@ -17,13 +17,15 @@ with open(f't1_res_{args.team_ID}.json', 'w', encoding='utf-8') as f:
     results = {f'{i:05}': {
         'id': i,
         'objects': [5, 0, 0, 3, 0, 0]
-    } for i in range(args.size)}
+    } for i in range(1, args.size+1)}
 
     for json_file in root.glob('*.json'):
         index = int(json_file.stem[9:])
         results[f'{index:05}']['objects'] = json.loads(open(str(json_file)).read())['objects']
 
-    json.dump(list(results.values()), f, ensure_ascii=False, indent='\t')
+    json.dump({
+        'track1_results': list(results.values()),
+    }, f, ensure_ascii=False, indent='\t')
 
 if args.gt:
     with open(args.gt) as f:
