@@ -19,7 +19,7 @@ with open(f't1_res_{args.team_ID}.json', 'w', encoding='utf-8') as f:
         'objects': [5, 0, 0, 3, 0, 0]
     } for i in range(args.size)}
 
-    for josn_file in map(str, root.glob('*.json')):
+    for json_file in map(str, root.glob('*.json')):
         index = int(json_file[:9])
         results[f'{index:05}']['objects'] = json.loads(open(json_file).read())['objects']
 
