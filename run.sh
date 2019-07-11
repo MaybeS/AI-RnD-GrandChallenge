@@ -14,6 +14,8 @@ for f in $ROOT/videos/*; do
         cd ../identifier;
         python main.py --dataset $ROOT/videos/$SEQ --support $ROOT/results/$SEQ/mask_rcnn_coco --support-only --type detection --dest $ROOT/results --no-sequence --jump $JUMP > /dev/null 2>&1;
         cd ..;
-        python evaluate.py --root /home/cvlab/datasets/AIGC  --sequence $SEQ
+        python evaluate.py --root $ROOT --sequence $SEQ
     fi
 done
+
+python combine.py --root $ROOT/results --team_ID $2
