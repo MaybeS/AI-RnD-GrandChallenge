@@ -14,7 +14,7 @@ for f in $ROOT/t1_video/*; do
         cd ../identifier;
         python main.py --dataset $ROOT/t1_video/$SEQ --support $ROOT/results/$SEQ/mask_rcnn_coco --support-only --type detection --dest $ROOT/results --no-sequence --jump $JUMP > /dev/null 2>&1;
         cd ..;
-        python evaluate.py --root $ROOT --sequence $SEQ
+        python evaluate.py --root $ROOT/results --sequence $SEQ
     fi
 done
 
