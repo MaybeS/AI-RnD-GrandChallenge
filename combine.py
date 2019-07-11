@@ -14,7 +14,7 @@ root = Path(args.root)
 
 with open(f't1_res_{args.team_ID}.json', 'w', encoding='utf-8') as f:
     results = {
-        'track1_results': [json.loads(open(json_file).read()) for json_file in map(str, root.glob('*.json'))]
+        'track1_results': [json.loads(open(json_file).read()) for json_file in map(str, sorted(root.glob('*.json'))])
     }
     json.dump(results, f, ensure_ascii=False, indent='\t')
 
