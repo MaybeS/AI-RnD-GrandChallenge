@@ -23,7 +23,7 @@ def compute_iou(boxA, boxB):
 
 
 def main(args):
-    target = Path(args.root).joinpath('results')
+    target = Path(args.root)
 
     tracking = target.joinpath(f'{args.sequence}.txt')
     detections = list(sorted(target.joinpath(f'{args.sequence}/mask_rcnn_coco').glob('*.txt')))
