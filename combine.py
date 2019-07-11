@@ -23,7 +23,7 @@ with open(f't1_res_{args.team_ID}.json', 'w', encoding='utf-8') as f:
         index = int(json_file.stem[9:])
         results[f'{index:05}']['objects'] = json.loads(open(str(json_file)).read())['objects']
 
-    json.dump(results.values(), f, ensure_ascii=False, indent='\t')
+    json.dump(list(results.values()), f, ensure_ascii=False, indent='\t')
 
 if args.gt:
     with open(args.gt) as f:
