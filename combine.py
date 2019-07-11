@@ -30,7 +30,12 @@ if args.gt:
 
     for idx in range(len(gts)):
         gt = gts[idx]['objects']
-        p = preds[idx]['objects']
+
+        try:
+            p = preds[idx]['objects']
+        except:
+            p = [0, 0, 0, 0, 0, 0]
+
         dist = [w[i]*((gt[i]-p[i])**2) for i in range(6)]
         print(gts[idx]['id'], math.sqrt(sum(dist)), math.sqrt(sum(dist)) > 30 or '')
         al.append(math.sqrt(sum(dist)))
