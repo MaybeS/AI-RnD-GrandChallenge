@@ -32,7 +32,7 @@ if args.gt:
         p = preds.get(k, [0, 0, 0, 0, 0, 0])
         
         dist = [w[i]*((gt[i]-p[i])**2) for i in range(6)]
-        print(gts[idx]['id'], math.sqrt(sum(dist)), math.sqrt(sum(dist)) > 30 or '')
+        print(k, math.sqrt(sum(dist)), math.sqrt(sum(dist)) > 30 or '')
         al.append(math.sqrt(sum(dist)))
 
     print('mean', np.array(al).mean())
