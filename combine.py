@@ -14,7 +14,7 @@ root = Path(args.root)
 
 with open(f't1_res_{args.team_ID}.json', 'w', encoding='utf-8') as f:
     results = {
-        'track1_results': [json.loads(open(json_file).read()) for json_file in map(str, sorted(root.glob('*.json'))])
+        'track1_results': [json.loads(open(json_file).read()) for json_file in map(str, root.glob('*.json'))]
     }
     json.dump(results, f, ensure_ascii=False, indent='\t')
 
@@ -22,20 +22,15 @@ if args.gt:
     with open(args.gt) as f:
         ground_truths = json.load(f)
     
-    preds = results['track1_results']
-    gts = ground_truths['track1_GT']
+    preds = {x['id']: x['objects'] for x in results['track1_results']}
+    gts = {x['id']: x['objects'] for x  in ground_truths['track1_GT']}
 
     w = [5, 1, 1, 1, 1, 1]
     al = []
 
-    for idx in range(len(gts)):
-        gt = gts[idx]['objects']
-
-        try:
-            p = preds[idx]['objects']
-        except:
-            p = [0, 0, 0, 0, 0, 0]
-
+    for k, gt in gts.items():
+        p = preds.get(k, [0, 0, 0, 0, 0, 0])
+        
         dist = [w[i]*((gt[i]-p[i])**2) for i in range(6)]
         print(gts[idx]['id'], math.sqrt(sum(dist)), math.sqrt(sum(dist)) > 30 or '')
         al.append(math.sqrt(sum(dist)))
