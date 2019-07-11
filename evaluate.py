@@ -60,7 +60,10 @@ def main(args):
                     max_iou = iou
                     keep = klass
             
-            klass_counts[klass_map[int(keep)]] += 1
+            try:
+                klass_counts[klass_map[int(keep)]] += 1
+            except:
+                pass
 
     json.dump({
         'id': int(args.sequence[9:]),
