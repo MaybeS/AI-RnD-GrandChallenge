@@ -8,14 +8,21 @@ parser = argparse.ArgumentParser(description='Combine results to json file')
 parser.add_argument('--root', required=False, default='/home/anears/Data/RNDGC', type=str)
 parser.add_argument('--team_ID', default='team1', type=str)
 parser.add_argument('--gt', type=str)
+parser.add_argument('--size', type=int, default=500, requried=False)
 args = parser.parse_args()
 
 root = Path(args.root)
 
 with open(f't1_res_{args.team_ID}.json', 'w', encoding='utf-8') as f:
-    results = {
-        'track1_results': [json.loads(open(json_file).read()) for json_file in map(str, root.glob('*.json'))]
-    }
+    results = {f'{i:05}': {
+        'id': i,
+        'objects': [5, 0, 0, 3, 0, 0]
+    } for i in range(args.size)}
+
+    for josn_file in map(str, root.glob('*.json')):
+        index = int(json_file[:9])
+        results[f'{index:05}']['objects'] = json.loads(open(json_file).read())['objects']
+
     json.dump(results, f, ensure_ascii=False, indent='\t')
 
 if args.gt:
