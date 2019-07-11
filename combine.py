@@ -8,7 +8,7 @@ parser = argparse.ArgumentParser(description='Combine results to json file')
 parser.add_argument('--root', required=False, default='/home/anears/Data/RNDGC', type=str)
 parser.add_argument('--team_ID', default='team1', type=str)
 parser.add_argument('--gt', type=str)
-parser.add_argument('--size', type=int, default=500, requried=False)
+parser.add_argument('--size', type=int, default=500, required=False)
 args = parser.parse_args()
 
 root = Path(args.root)
