@@ -1,0 +1,6 @@
+[submodule "identifier"]
+	path = identifier
+	url = git@github.com:MaybeS/MOT
+[submodule "detector"]
+	path = detector
+	url = git@github.com:MaybeS/Mask-RCNN
