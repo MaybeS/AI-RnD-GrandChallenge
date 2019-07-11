@@ -5,7 +5,8 @@ echo $ROOT
 echo $JUMP
 
 for f in $ROOT/videos/*; do
-    SEQ=$(dirname $f)
+    SEQ=$(basename $f)
+    echo $SEQ
 
     if [ -d "$f" ]; then
         cd detector;
