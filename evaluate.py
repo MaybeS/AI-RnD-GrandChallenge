@@ -65,7 +65,7 @@ def main(args):
     json.dump({
         'id': int(args.sequence[9:]),
         'objects': [klass_counts.get(k, 0) for k in ['person', 'fire', 'firehydrant', 'car', 'bicycle', 'motorcycle']]
-    }, open(target.joinpath(f'{args.sequence}.json', 'w')))
+    }, open(target.joinpath(f'{args.sequence}.json'), 'w'))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Train Mask R-CNN to detect webtoon characters.')
