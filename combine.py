@@ -8,21 +8,31 @@ parser = argparse.ArgumentParser(description='Combine results to json file')
 parser.add_argument('--root', required=False, default='/home/anears/Data/RNDGC', type=str)
 parser.add_argument('--team_ID', default='team1', type=str)
 parser.add_argument('--gt', type=str)
+parser.add_argument('--size', type=int, default=500, required=False)
 args = parser.parse_args()
 
 root = Path(args.root)
 
 with open(f't1_res_{args.team_ID}.json', 'w', encoding='utf-8') as f:
-    results = {
-        'track1_results': [json.loads(open(json_file).read()) for json_file in map(str, root.glob('*.json'))]
+    results = {f'{i:05}': {
+        'id': i,
+        'objects': [5, 0, 0, 3, 0, 0]
+    } for i in range(1, args.size+1)}
+
+    for json_file in root.glob('*.json'):
+        index = int(json_file.stem[9:])
+        results[f'{index:05}']['objects'] = json.loads(open(str(json_file)).read())['objects']
+
+    pred_json = {
+        'track1_results': list(results.values()),
     }
-    json.dump(results, f, ensure_ascii=False, indent='\t')
+    json.dump(pred_json, f, ensure_ascii=False, indent='\t')
 
 if args.gt:
     with open(args.gt) as f:
         ground_truths = json.load(f)
     
-    preds = {x['id']: x['objects'] for x in results['track1_results']}
+    preds = {x['id']: x['objects'] for x in pred_json['track1_results']}
     gts = {x['id']: x['objects'] for x  in ground_truths['track1_GT']}
 
     w = [5, 1, 1, 1, 1, 1]
