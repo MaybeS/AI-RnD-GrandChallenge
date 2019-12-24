@@ -25,8 +25,10 @@ def compute_iou(boxA, boxB):
 def main(args):
     target = Path(args.root)
 
-    tracking = target.joinpath(f'{args.sequence}.txt')
-    detections = list(sorted(target.joinpath(f'{args.sequence}/mask_rcnn_coco').glob('*.txt')))
+    # tracking = target.joinpath(f'{args.sequence}.txt')
+    # detections = list(sorted(target.joinpath(f'{args.sequence}/mask_rcnn_coco').glob('*.txt')))
+    tracking = target.joinpath('img1.txt')
+    detections = list(sorted(target.joinpath(f'mask_rcnn_coco').glob('*.txt')))
 
     dets = np.empty((0, 7))
     for p, detection in enumerate(detections, 1):
@@ -65,14 +67,18 @@ def main(args):
             except:
                 pass
 
+    # json.dump({
+    #     'id': int(args.sequence[9:]),
+    #     'objects': [klass_counts.get(k, 0) for k in ['person', 'fire', 'firehydrant', 'car', 'bicycle', 'motorcycle']]
+    # }, open(target.joinpath(f'{args.sequence}.json'), 'w'))
     json.dump({
-        'id': int(args.sequence[9:]),
+        'id': 0,
         'objects': [klass_counts.get(k, 0) for k in ['person', 'fire', 'firehydrant', 'car', 'bicycle', 'motorcycle']]
-    }, open(target.joinpath(f'{args.sequence}.json'), 'w'))
+    }, open(target.joinpath('result.json'), 'w'))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Train Mask R-CNN to detect webtoon characters.')
     parser.add_argument('--root', required=False, default='/home/jiun/datasets/AIGC', type=str)
-    parser.add_argument('--sequence', required=True, type=str)
+    parser.add_argument('--sequence', required=False, type=str)
     arguments = parser.parse_args()
     main(arguments)
